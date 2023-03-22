@@ -134,6 +134,21 @@ describe('Round', function() {
     expect(round.calculatePercentCorrect()).to.equal(33)
   })
 
+  it('should return a message once the round is over', function() {
+    const card1 = new Card(1, 'What is Robbie\'s favorite animal', ['sea otter', 'pug', 'capybara'], 'sea otter');
+    const card2 = new Card(14, 'What organ is Khalid missing?', ['spleen', 'appendix', 'gallbladder'], 'gallbladder');
+    const card3 = new Card(12, 'What is Travis\'s middle name?', ['Lex', 'William', 'Fitzgerald'], 'Fitzgerald');
+    const deck = new Deck([card1, card2, card3]);
+    const round = new Round(deck);
+    let turn = new Turn(card1, 'sea otter')
+    let turn2 = new Turn(card2, 'appendix')
+    let turn3 = new Turn(card3, 'Lex')
+    round.takeTurn(turn.guess)
+    round.takeTurn(turn2.guess)
+    round.takeTurn(turn3.guess)
+    expect(round.endRound()).to.equal('** Round over! ** You answered 33% of the questions correctly!')
+
+  })
 
 
 })
