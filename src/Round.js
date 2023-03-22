@@ -6,6 +6,7 @@ class Round {
     this.currentCard = deckObj.cards[0]
     this.turns = 0
     this.incorrectGuesses = []
+    this.percent = []
 
 
   }
@@ -25,9 +26,9 @@ class Round {
     }
   }
   calculatePercentCorrect() {
-    // calculates and returns percentage of correct guesses
-    // turns - incorrectGuesses.length / turns
-    // return as percentage
+    let correctPercent = (this.turns - this.incorrectGuesses.length)/this.turns
+    return Math.round(100 * correctPercent)
+   
   }
 }
 
