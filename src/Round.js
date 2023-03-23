@@ -16,25 +16,25 @@ class Round {
   }
   takeTurn(userGuess) {
     let turn = new Turn(userGuess, this.currentCard)
-    this.currentCard = this.deck.cards[this.turns]
     this.turns += 1
-    console.log(userGuess)
-    if(userGuess !== this.currentCard.correctAnswer) {
+    // console.log(userGuess)
+    if(!turn.evaluateGuess()) {
       this.incorrectGuesses.push(this.currentCard.id)
-      return turn.giveFeedback()
-    } else {
+    } 
+      this.currentCard = this.deck.cards[this.turns]
       return turn.giveFeedback()
     }
-  }
+  
   calculatePercentCorrect() {
     let correctPercent = (this.turns - this.incorrectGuesses.length)/this.turns
     return Math.round(100 * correctPercent)
   }
   endRound() {
-    const message = `** Round over! ** You answered ${this.calculatePercentCorrect()}% of the questions correctly!`
+    let message = `** Round over! ** You answered ${this.calculatePercentCorrect()}% of the questions correctly!`
     console.log(message)
     return message
   }
 }
+
 
 module.exports = Round
