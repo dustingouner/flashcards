@@ -32,6 +32,7 @@ class Round {
   endRound() {
     let message = `** Round over! ** You answered ${this.calculatePercentCorrect()}% of the questions correctly!`
     console.log(message)
+    console.timeLog("Game Timer")
     return message
   }
 }
