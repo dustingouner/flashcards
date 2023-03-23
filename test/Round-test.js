@@ -7,10 +7,17 @@ const Deck = require('../src/Deck');
 const Round = require('../src/Round');
 
 describe('Round', function() {
+  var card1, card2, card3, deck, round, turn
   let testNum = 0
   beforeEach(function() {
     testNum ++;
     console.log(`Test ${testNum}`)
+    card1 = new Card(1, 'What is Robbie\'s favorite animal', ['sea otter', 'pug', 'capybara'], 'sea otter');
+    card2 = new Card(14, 'What organ is Khalid missing?', ['spleen', 'appendix', 'gallbladder'], 'gallbladder');
+    card3 = new Card(12, 'What is Travis\'s middle name?', ['Lex', 'William', 'Fitzgerald'], 'Fitzgerald');
+    deck = new Deck([card1, card2, card3]);
+    round = new Round(deck);
+    turn = new Turn('pug', card1)
   });
 
   it('should be a function', function() {
@@ -18,77 +25,38 @@ describe('Round', function() {
   });
 
   it('should return the current card', function() {
-    const card1 = new Card(1, 'What is Robbie\'s favorite animal', ['sea otter', 'pug', 'capybara'], 'sea otter');
-    const card2 = new Card(14, 'What organ is Khalid missing?', ['spleen', 'appendix', 'gallbladder'], 'gallbladder');
-    const card3 = new Card(12, 'What is Travis\'s middle name?', ['Lex', 'William', 'Fitzgerald'], 'Fitzgerald');
-    const deck = new Deck([card1, card2, card3]);
-    const round = new Round(deck);
     expect(round.returnCurrentCard()).to.equal(deck.cards[0])
   });
 
   it('should be able to keep track of the number of turns', function() {
-    const card1 = new Card(1, 'What is Robbie\'s favorite animal', ['sea otter', 'pug', 'capybara'], 'sea otter');
-    const card2 = new Card(14, 'What organ is Khalid missing?', ['spleen', 'appendix', 'gallbladder'], 'gallbladder');
-    const card3 = new Card(12, 'What is Travis\'s middle name?', ['Lex', 'William', 'Fitzgerald'], 'Fitzgerald');
-    const deck = new Deck([card1, card2, card3]);
-    const round = new Round(deck);
     expect(round.turns).to.equal(0)
   });
 
   it('should increase the number of turns by one each time a turn occurs', function() {
-    const card1 = new Card(1, 'What is Robbie\'s favorite animal', ['sea otter', 'pug', 'capybara'], 'sea otter');
-    const card2 = new Card(14, 'What organ is Khalid missing?', ['spleen', 'appendix', 'gallbladder'], 'gallbladder');
-    const card3 = new Card(12, 'What is Travis\'s middle name?', ['Lex', 'William', 'Fitzgerald'], 'Fitzgerald');
-    const deck = new Deck([card1, card2, card3]);
-    const round = new Round(deck);
-    let turn = new Turn('pug', card1)
-    let turn2 = new Turn('gallbladder', card2)
-    round.takeTurn(turn.guess)
+    round.takeTurn('pug')
     expect(round.turns).to.equal(1)
-    round.takeTurn(turn2.guess)
+    round.takeTurn('gallbladder')
     expect(round.turns).to.equal(2)
   });
 
-  it.only('should go to the next card after a turn is taken', function() {
-    const card1 = new Card(1, 'What is Robbie\'s favorite animal', ['sea otter', 'pug', 'capybara'], 'sea otter');
-    const card2 = new Card(14, 'What organ is Khalid missing?', ['spleen', 'appendix', 'gallbladder'], 'gallbladder');
-    const card3 = new Card(12, 'What is Travis\'s middle name?', ['Lex', 'William', 'Fitzgerald'], 'Fitzgerald');
-    const deck = new Deck([card1, card2, card3]);
-    const round = new Round(deck);
-    let turn = new Turn(card1, 'pug')
-    let turn2 = new Turn(card2, 'gallbladder')
-    let turn3 = new Turn(card3, 'William')
+  it('should go to the next card after a turn is taken', function() {
     round.takeTurn(turn.guess)
     expect(round.returnCurrentCard()).to.equal(card2)
-    // round.takeTurn(turn2.guess)
-    // expect(round.returnCurrentCard()).to.equal(card2)
-    // round.takeTurn(turn3.guess)
-    // expect(round.returnCurrentCard()).to.equal(card3)
   });
 
   it('should record incorrect guesses', function() {
-    const card1 = new Card(1, 'What is Robbie\'s favorite animal', ['sea otter', 'pug', 'capybara'], 'sea otter');
-    const card2 = new Card(14, 'What organ is Khalid missing?', ['spleen', 'appendix', 'gallbladder'], 'gallbladder');
-    const card3 = new Card(12, 'What is Travis\'s middle name?', ['Lex', 'William', 'Fitzgerald'], 'Fitzgerald');
-    const deck = new Deck([card1, card2, card3]);
-    const round = new Round(deck);
-    let turn = new Turn(card1, 'pug')
-    let turn2 = new Turn(card2, 'spleen')
-    let turn3 = new Turn(card3, 'William')
+    let turn = new Turn('pug', card1)
+    let turn2 = new Turn('spleen', card2)
+    let turn3 = new Turn('William', card3)
     round.takeTurn(turn.guess)
     expect(round.incorrectGuesses[0]).to.equal(card1.id)
-    round.takeTurn(turn2.guess)
+    round.takeTurn(turn.guess)
     expect(round.incorrectGuesses[1]).to.equal(card2.id)
-    round.takeTurn(turn3.guess)
+    round.takeTurn('William', card3)
     expect(round.incorrectGuesses[2]).to.equal(card3.id)
   });
 
   it('should evaluate if the users guess is correct', function() {
-    const card1 = new Card(1, 'What is Robbie\'s favorite animal', ['sea otter', 'pug', 'capybara'], 'sea otter');
-    const card2 = new Card(14, 'What organ is Khalid missing?', ['spleen', 'appendix', 'gallbladder'], 'gallbladder');
-    const card3 = new Card(12, 'What is Travis\'s middle name?', ['Lex', 'William', 'Fitzgerald'], 'Fitzgerald');
-    const deck = new Deck([card1, card2, card3]);
-    const round = new Round(deck);
     let turn = new Turn('sea otter', card1)
     let turn2 = new Turn('gallbladder', card2)
     let turn3 = new Turn('Fitzgerald', card3)
@@ -101,11 +69,6 @@ describe('Round', function() {
   });
 
   it('should evaluate if the users guess is incorrect', function() {
-    const card1 = new Card(1, 'What is Robbie\'s favorite animal', ['sea otter', 'pug', 'capybara'], 'sea otter');
-    const card2 = new Card(14, 'What organ is Khalid missing?', ['spleen', 'appendix', 'gallbladder'], 'gallbladder');
-    const card3 = new Card(12, 'What is Travis\'s middle name?', ['Lex', 'William', 'Fitzgerald'], 'Fitzgerald');
-    const deck = new Deck([card1, card2, card3]);
-    const round = new Round(deck);
     let turn = new Turn('pug', card1)
     let turn2 = new Turn('appendix', card2)
     let turn3 = new Turn('William', card3)
@@ -118,11 +81,6 @@ describe('Round', function() {
   });
 
   it('should calculate and return the percentage of correct guesses', function() {
-    const card1 = new Card(1, 'What is Robbie\'s favorite animal', ['sea otter', 'pug', 'capybara'], 'sea otter');
-    const card2 = new Card(14, 'What organ is Khalid missing?', ['spleen', 'appendix', 'gallbladder'], 'gallbladder');
-    const card3 = new Card(12, 'What is Travis\'s middle name?', ['Lex', 'William', 'Fitzgerald'], 'Fitzgerald');
-    const deck = new Deck([card1, card2, card3]);
-    const round = new Round(deck);
     let turn = new Turn('sea otter', card1)
     let turn2 = new Turn('appendix', card2)
     let turn3 = new Turn('Lex', card3)
@@ -135,11 +93,6 @@ describe('Round', function() {
   })
 
   it('should return a message once the round is over', function() {
-    const card1 = new Card(1, 'What is Robbie\'s favorite animal', ['sea otter', 'pug', 'capybara'], 'sea otter');
-    const card2 = new Card(14, 'What organ is Khalid missing?', ['spleen', 'appendix', 'gallbladder'], 'gallbladder');
-    const card3 = new Card(12, 'What is Travis\'s middle name?', ['Lex', 'William', 'Fitzgerald'], 'Fitzgerald');
-    const deck = new Deck([card1, card2, card3]);
-    const round = new Round(deck);
     let turn = new Turn('sea otter', card1)
     let turn2 = new Turn('appendix', card2)
     let turn3 = new Turn('Lex', card3)
@@ -147,8 +100,5 @@ describe('Round', function() {
     round.takeTurn(turn2.guess)
     round.takeTurn(turn3.guess)
     expect(round.endRound()).to.equal('** Round over! ** You answered 33% of the questions correctly!')
-
   })
-
-
 })
