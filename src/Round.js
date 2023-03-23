@@ -15,14 +15,15 @@ class Round {
     return this.currentCard
   }
   takeTurn(userGuess) {
-    let turn = new Turn(this.currentCard, userGuess)
-    this.currentCard = this.deck.cards[`${this.turns}`]
+    let turn = new Turn(userGuess, this.currentCard)
+    this.currentCard = this.deck.cards[this.turns]
     this.turns += 1
+    console.log(userGuess)
     if(userGuess !== this.currentCard.correctAnswer) {
       this.incorrectGuesses.push(this.currentCard.id)
-      turn.giveFeedback()
+      return turn.giveFeedback()
     } else {
-      turn.giveFeedback()
+      return turn.giveFeedback()
     }
   }
   calculatePercentCorrect() {

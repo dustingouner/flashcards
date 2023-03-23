@@ -41,8 +41,8 @@ describe('Round', function() {
     const card3 = new Card(12, 'What is Travis\'s middle name?', ['Lex', 'William', 'Fitzgerald'], 'Fitzgerald');
     const deck = new Deck([card1, card2, card3]);
     const round = new Round(deck);
-    let turn = new Turn(card1, 'pug')
-    let turn2 = new Turn(card2, 'gallbladder')
+    let turn = new Turn('pug', card1)
+    let turn2 = new Turn('gallbladder', card2)
     round.takeTurn(turn.guess)
     expect(round.turns).to.equal(1)
     round.takeTurn(turn2.guess)
@@ -89,9 +89,9 @@ describe('Round', function() {
     const card3 = new Card(12, 'What is Travis\'s middle name?', ['Lex', 'William', 'Fitzgerald'], 'Fitzgerald');
     const deck = new Deck([card1, card2, card3]);
     const round = new Round(deck);
-    let turn = new Turn(card1, 'sea otter')
-    let turn2 = new Turn(card2, 'gallbladder')
-    let turn3 = new Turn(card3, 'Fitzgerald')
+    let turn = new Turn('sea otter', card1)
+    let turn2 = new Turn('gallbladder', card2)
+    let turn3 = new Turn('Fitzgerald', card3)
     round.takeTurn(turn.guess)
     expect(turn.giveFeedback()).to.equal('correct!')
     round.takeTurn(turn2.guess)
@@ -106,9 +106,9 @@ describe('Round', function() {
     const card3 = new Card(12, 'What is Travis\'s middle name?', ['Lex', 'William', 'Fitzgerald'], 'Fitzgerald');
     const deck = new Deck([card1, card2, card3]);
     const round = new Round(deck);
-    let turn = new Turn(card1, 'pug')
-    let turn2 = new Turn(card2, 'appendix')
-    let turn3 = new Turn(card3, 'Lex')
+    let turn = new Turn('pug', card1)
+    let turn2 = new Turn('appendix', card2)
+    let turn3 = new Turn('William', card3)
     round.takeTurn(turn.guess)
     expect(turn.giveFeedback()).to.equal('incorrect!')
     round.takeTurn(turn2.guess)
@@ -123,9 +123,9 @@ describe('Round', function() {
     const card3 = new Card(12, 'What is Travis\'s middle name?', ['Lex', 'William', 'Fitzgerald'], 'Fitzgerald');
     const deck = new Deck([card1, card2, card3]);
     const round = new Round(deck);
-    let turn = new Turn(card1, 'sea otter')
-    let turn2 = new Turn(card2, 'appendix')
-    let turn3 = new Turn(card3, 'Lex')
+    let turn = new Turn('sea otter', card1)
+    let turn2 = new Turn('appendix', card2)
+    let turn3 = new Turn('Lex', card3)
     round.takeTurn(turn.guess)
     expect(round.calculatePercentCorrect()).to.equal(100)
     round.takeTurn(turn2.guess)
@@ -140,9 +140,9 @@ describe('Round', function() {
     const card3 = new Card(12, 'What is Travis\'s middle name?', ['Lex', 'William', 'Fitzgerald'], 'Fitzgerald');
     const deck = new Deck([card1, card2, card3]);
     const round = new Round(deck);
-    let turn = new Turn(card1, 'sea otter')
-    let turn2 = new Turn(card2, 'appendix')
-    let turn3 = new Turn(card3, 'Lex')
+    let turn = new Turn('sea otter', card1)
+    let turn2 = new Turn('appendix', card2)
+    let turn3 = new Turn('Lex', card3)
     round.takeTurn(turn.guess)
     round.takeTurn(turn2.guess)
     round.takeTurn(turn3.guess)
