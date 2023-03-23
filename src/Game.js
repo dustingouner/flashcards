@@ -17,6 +17,7 @@ class Game {
     this.currentRound = new Round(deck);
     this.printMessage(deck, this.currentRound);
     this.printQuestion(this.currentRound);
+    console.time("Game Timer")
   }
   createsCards() {
     const cards = prototypeQuestions.map(question => new Card(question.id, question.question, question.answers, question.correctAnswer))
