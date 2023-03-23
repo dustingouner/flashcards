@@ -25,49 +25,52 @@ describe('Turn', function() {
 
   it('should store a card', function() {
     const card = new Card(2, "What is a comma-separated list of related values?", ["array", "object", "function"], "array");
-    const turn = new Turn(card, "array");
+    const turn = new Turn("array", card);
     expect(turn.card).to.deep.equal(card);
   });
 
   it('should store users guess', function() {
     const card = new Card(2, "What is a comma-separated list of related values?", ["array", "object", "function"], "array")
-    const turn = new Turn(card, "array")
+    const turn = new Turn("array", card);
     expect(turn.guess).to.equal("array")
   });
 
   it('should return a guess', function() {
     const card = new Card(2, "What is a comma-separated list of related values?", ["array", "object", "function"], "array");
-    const turn = new Turn(card, "array");
+    const turn = new Turn("array", card);
     expect(turn.returnGuess()).to.equal("array");
   });
 
   it('should return a card', function() {
     const card = new Card(2, "What is a c;omma-separated list of related values?", ["array", "object", "function"], "array")
-    const turn = new Turn(card, "array");
+    const turn = new Turn("array", card);
     expect(turn.returnCard()).to.deep.equal(card);
   });
 
   it('should be able to evaluate a correct guess', function() {
     const card = new Card(2, "What is a comma-separated list of related values?", ["array", "object", "function"], "array");
-    const turn = new Turn(card, "array");
+    const turn = new Turn("array", card);
     expect(turn.evaluateGuess()).to.equal(true);
   });
 
   it('should be able to evaluate an incorrect guess', function() {
     const card = new Card(2, "What is a comma-separated list of related values?", ["array", "object", "function"], "array");
-    const turn = new Turn(card, "wrong");
+    const turn = new Turn("object", card);
     expect(turn.evaluateGuess()).to.equal(false);
   });
 
   it('should give feedback when a user makes a correct guess', function() {
       const card = new Card(2, "What is a comma-separated list of related values?", ["array", "object", "function"], "array");
-      const turn = new Turn(card, "array");
+      const card3 = new Card(12, 'What is Travis\'s middle name?', ['Lex', 'William', 'Fitzgerald'], 'Fitzgerald');
+      const turn = new Turn("array", card);
+      const turn2 = new Turn("Lex", card3);
       expect(turn.giveFeedback()).to.equal('correct!');
+      expect(turn2.giveFeedback()).to.equal('incorrect!');
   });
 
   it('should give feedback when a user makes an incorrect guess', function() {
     const card = new Card(2, "What is a comma-separated list of related values?", ["array", "object", "function"], "array");
-    const turn = new Turn(card, "wrong");
+    const turn = new Turn("object", card);
     expect(turn.giveFeedback()).to.equal('incorrect!');
 });
 
